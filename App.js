@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import HomeScreen from './screens/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Colors } from './constants/styles'
+import { useContext } from 'react';
+import { AuthContext } from './store/auth-context';
 
 const Stack = createNativeStackNavigator()
 
@@ -27,6 +29,16 @@ function Unauthenticated(){
 function Authenticated(){
   return(
     <Text>Authenticated</Text>
+  )
+}
+
+function Root(){
+  const authCtx = useContext(AuthContext)
+  return(
+    <NavigationContainer>
+      {!authCtx.isAuthenticated && <Unauthenticated />}
+      {authCtx.isAuthenticated && <Authenticated />}
+    </NavigationContainer>
   )
 }
 

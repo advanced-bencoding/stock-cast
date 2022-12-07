@@ -12,7 +12,7 @@ export async function authenticate(mode, email, password){
     }
     url += API_KEY
 
-    const repsonse = await axios.post(
+    const response = await axios.post(
         url,
         {
             email: email,
@@ -21,13 +21,5 @@ export async function authenticate(mode, email, password){
         }
     )
 
-    return repsonse.data.idToken
-}
-
-export function createUser(email, password){
-    return authenticate('signup', email, password)
-}
-
-export function login(email, password){
-    return authenticate('login', email, password)
+    return response.data.idToken
 }

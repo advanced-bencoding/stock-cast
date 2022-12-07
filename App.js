@@ -6,8 +6,8 @@ import HomeScreen from './screens/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Colors } from './constants/styles'
-import { useContext } from 'react';
-import { AuthContext } from './store/auth-context';
+import { useContext, useEffect } from 'react';
+import { AuthContext, AuthContextProvider } from './store/auth-context';
 
 const Stack = createNativeStackNavigator()
 
@@ -46,9 +46,9 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
-      <NavigationContainer>
-        <Unauthenticated />
-      </NavigationContainer>
+      <AuthContextProvider>
+        <Root />
+      </AuthContextProvider>
     </>
   );
 }

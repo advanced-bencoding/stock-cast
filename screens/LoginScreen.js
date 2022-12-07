@@ -24,7 +24,7 @@ export default function LoginScreen(){
         }
     }
 
-    async function loginHandler({email, password}){
+    async function loginHandler(email, password){
         try{
             const token = await authenticate("login", email, password)
             authCtx.authenticate(token)

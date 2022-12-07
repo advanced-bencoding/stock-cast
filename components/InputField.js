@@ -1,6 +1,6 @@
 import { TextInput, View, StyleSheet, Text } from "react-native";
 
-export default function InputField({placeholder, label, secure}){
+export default function InputField({placeholder, label, secure, value, changeState}){
     return(
         <View style={styles.container}>
             <Text style={styles.label}>{label}</Text>
@@ -8,6 +8,8 @@ export default function InputField({placeholder, label, secure}){
                 style={styles.input}
                 secureTextEntry={secure}            
                 placeholder={placeholder}
+                value={value}
+                onChangeText={changeState}
             />
         </View>
     )

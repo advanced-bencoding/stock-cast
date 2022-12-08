@@ -8,8 +8,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Colors } from './constants/styles'
 import { useContext, useEffect } from 'react';
 import { AuthContext, AuthContextProvider } from './store/auth-context';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons'
+import Accounts from './screens/Account';
 
 const Stack = createNativeStackNavigator()
+const Tabs = createBottomTabNavigator()
 
 function Unauthenticated(){
   return(
@@ -28,7 +32,22 @@ function Unauthenticated(){
 
 function Authenticated(){
   return(
-    <Text>Authenticated</Text>
+    <Tabs.Navigator>
+      <Tabs.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({focused})=> focused ? <Ionicons name='home-sharp' size={30}/> : <Ionicons name='home-outline' size={30}/>
+        }}
+      />
+      <Tabs.Screen
+        name="Account"
+        component={Accounts}
+        options={{
+          tabBarIcon: ({focused})=> focused ? <Ionicons name='settings-sharp' size={30}/> : <Ionicons name='settings-outline' size={30}/>
+        }}
+      />
+    </Tabs.Navigator>
   )
 }
 

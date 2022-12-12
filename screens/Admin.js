@@ -5,6 +5,7 @@ import FlatButton from "../components/ui/FlatButton"
 
 export default function Admin(){
     function changeValue(type, value){
+        value = Number(value)
         switch(type){
             case "forex":
                 setValues(old => ({...old, forex: value}))
@@ -82,7 +83,7 @@ export default function Admin(){
                 value={values.msciw}
                 min={1000}
                 max={5000}
-                onChange={changeValue.bind(this, "msciww")}
+                onChange={changeValue.bind(this, "msciw")}
             /> 
             <InputVariable
                 label="MSCI Emerging Markets Index"

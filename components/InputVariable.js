@@ -1,7 +1,7 @@
 import { View, TextInput, Text, StyleSheet} from 'react-native'
 import Slider from '@react-native-community/slider'
 
-export default function InputVariable({label, value, max, min}){
+export default function InputVariable({label, value, max, min, onChange}){
     return(
         <View style={styles.container}>
             <Text style={styles.label}>{label}</Text>
@@ -11,11 +11,13 @@ export default function InputVariable({label, value, max, min}){
                     maximumValue={max}
                     style={styles.slider}
                     value={value}
+                    onValueChange={onChange}
                 />
                 <TextInput
                     style={styles.input}
                     value={value.toString()}
                     keyboardType='decimal-pad'
+                    onChangeText={onChange}
                 />
             </View>
         </View>

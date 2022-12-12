@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     container:{
         backgroundColor: Colors.primary400,
         padding: 16,
-        width: '100%',
+        flex: 1,
         borderRadius: 5,
         marginVertical: 5
     },

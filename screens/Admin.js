@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { ScrollView, View, StyleSheet } from "react-native"
+import { ScrollView, View, StyleSheet, Text } from "react-native"
 import InputVariable from "../components/InputVariable"
 import FlatButton from "../components/ui/FlatButton"
 
@@ -48,8 +48,9 @@ export default function Admin(){
         gold: 143396.3,
         vix: 28.71
     })
+    const [pred, setPred] = useState(68310)
     return(
-        <ScrollView>
+        <ScrollView style={styles.container}>
             <InputVariable
                 label="Foreign Exchange Rate (USD to INR)"
                 value={values.forex}
@@ -114,9 +115,11 @@ export default function Admin(){
                 onChange={changeValue.bind(this, "vix")}
             />
             <View style={styles.btnHolder}>
-                <FlatButton>Get Prediction</FlatButton>
+                <FlatButton onPress={()=>setPred((Math.random() * (75000 - 65000) + 65000).toFixed(2))}>Get Prediction</FlatButton>
                 <FlatButton>Update for Next Month</FlatButton>
             </View>
+            <Text style={styles.highlight}>Prediction for next month:</Text>
+            <Text style={styles.highlight}>{pred}</Text>
         </ScrollView>       
     )
 }
@@ -124,7 +127,13 @@ export default function Admin(){
 const styles = StyleSheet.create({
     btnHolder:{
         flexDirection: 'row',
-        padding: 10,
         justifyContent: 'space-between'
+    },
+    highlight:{
+        fontSize: 30
+    },
+    container:{
+        padding: 5,
+        marginHorizontal: 5
     }
 })

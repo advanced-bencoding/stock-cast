@@ -51,8 +51,10 @@ export default function LoginScreen(){
                     changeState={stateChange.bind(this, 'password')}
                 />
             </View>
-            <FlatButton onPress={()=>loginHandler(email, password)}>Login</FlatButton>
-            <FlatButton onPress={()=>{navigation.navigate("Signup")}}>Signup</FlatButton>
+            <View style={styles.btnHolder}>
+                <FlatButton onPress={()=>loginHandler(email, password)}>Login</FlatButton>
+                <FlatButton onPress={()=>{navigation.navigate("Signup")}}>Signup</FlatButton>
+            </View>
         </View>
     )
 }
@@ -63,5 +65,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.accent400,
         paddingVertical: 50
+    },
+    btnHolder:{
+        height: 125
     }
 })

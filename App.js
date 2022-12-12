@@ -11,6 +11,8 @@ import { AuthContext, AuthContextProvider } from './store/auth-context';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons'
 import Accounts from './screens/Account';
+import MarketSegments from './screens/MarketSegments';
+import Admin from './screens/Admin';
 
 const Stack = createNativeStackNavigator()
 const Tabs = createBottomTabNavigator()
@@ -41,10 +43,25 @@ function Authenticated(){
         }}
       />
       <Tabs.Screen
+        name="Marketsegs"
+        component={MarketSegments}
+        options={{
+          tabBarIcon: ({focused})=> focused ? <Ionicons name='pie-chart-sharp' size={30}/> : <Ionicons name='pie-chart-outline' size={30}/>,
+          title: 'Market Segments'
+        }}
+      />
+      <Tabs.Screen
         name="Account"
         component={Accounts}
         options={{
           tabBarIcon: ({focused})=> focused ? <Ionicons name='settings-sharp' size={30}/> : <Ionicons name='settings-outline' size={30}/>
+        }}
+      />
+      <Tabs.Screen
+        name="Admin"
+        component={Admin}
+        options={{
+          tabBarIcon: ({focused})=> focused ? <Ionicons name='hammer-sharp' size={30}/> : <Ionicons name='hammer-outline' size={30}/>
         }}
       />
     </Tabs.Navigator>

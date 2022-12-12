@@ -1,5 +1,4 @@
-import { View, Text, Dimensions, StyleSheet } from 'react-native'
-import { LineChart } from 'react-native-chart-kit'
+import { View, StyleSheet } from 'react-native'
 import Title from '../components/ui/Title'
 import axios from 'axios'
 import { useEffect, useState } from 'react'

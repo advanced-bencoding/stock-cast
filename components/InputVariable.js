@@ -27,8 +27,6 @@ export default function InputVariable({label, value, max, min, onChange}){
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        marginHorizontal: 5,
-        padding: 10
     },
     innerContainer:{
         flexDirection: 'row',

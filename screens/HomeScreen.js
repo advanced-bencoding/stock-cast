@@ -13,7 +13,7 @@ export default function HomeScreen(){
     const [data, setData] = useState(monthData)
     useEffect(()=>{
         axios.get("http://192.168.1.5:8080/day")
-        .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => item.value - 100), color: ()=> 'black'}], legend:["close", "prediction"]}))
+        .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => item.value - 400), color: ()=> 'black'}], legend:["close", "prediction"]}))
         .catch(err => console.log(err))
 
         axios.get("http://192.168.1.5:8080/month")
@@ -33,9 +33,9 @@ export default function HomeScreen(){
 
         setInterval(()=>{
             axios.get("http://192.168.1.5:8080/day")
-            .then(response => setDayData({datasets: [{data: response.data, color: ()=>'#00ff00'}, {data: response.data.map(item => item - 1000), color: ()=> 'black'}], legend:["close", "prediction"]}))
+            .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => item.value - 100), color: ()=> 'black'}], legend:["close", "prediction"]}))
             .catch(err => console.log(err))
-        }, 30000)
+        }, 10000)
     }
     ,[])
 

@@ -12,15 +12,15 @@ export default function HomeScreen(){
     const [historicalData, setHistoricalData] = useState({datasets: [{data:[0]}]})
     const [data, setData] = useState(monthData)
     useEffect(()=>{
-        axios.get("http://192.168.1.5:8080/day")
+        axios.get("https://stockup.onrender.com/day")
         .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => item.value - 400), color: ()=> 'black'}], legend:["close", "prediction"]}))
         .catch(err => console.log(err))
 
-        axios.get("http://192.168.1.5:8080/month")
+        axios.get("https://stockup.onrender.com/month")
         .then(response => setMonthData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}, {data: response.data.map(item => item.close - 500), color: ()=> 'black'}], legend:["close", "prediction"]}))
         .catch(err => console.log(err))
 
-        axios.get("http://192.168.1.5:8080/historical")
+        axios.get("https://stockup.onrender.com/historical")
         .then(response => setHistoricalData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}, {data: response.data.map(item => item.close - 750), color: ()=> 'black'}], legend:["close", "prediction"]}))
         .catch(err => console.log(err))
         setFetchedData(true)

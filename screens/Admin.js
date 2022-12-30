@@ -2,6 +2,7 @@ import { useState } from "react"
 import { ScrollView, View, StyleSheet, Text } from "react-native"
 import InputVariable from "../components/InputVariable"
 import FlatButton from "../components/ui/FlatButton"
+import axios from "axios"
 
 export default function Admin(){
     function changeValue(type, value){
@@ -45,10 +46,21 @@ export default function Admin(){
         msciw: 2546,
         msciem: 1824,
         crude: 9119.55,
-        gold: 143396.3,
+        gold: 50804,
         vix: 28.71
     })
+
     const [pred, setPred] = useState(68310)
+
+    function getPred(features){
+        console.log(features)
+        axios.post("https://tensorflowbrsensex.onrender.com/hello",{
+            "instances": [features]
+        })
+        .then(res => setPred(res.data["prediction"]))
+        .catch(err => console.log(err))
+    }
+
     return(
         <ScrollView style={styles.container}>
             <InputVariable
@@ -103,8 +115,8 @@ export default function Admin(){
             <InputVariable
                 label="Gold"
                 value={values.gold}
-                min={100000}
-                max={300000}
+                min={20000}
+                max={150000}
                 onChange={changeValue.bind(this, "gold")}
             /> 
             <InputVariable
@@ -115,7 +127,7 @@ export default function Admin(){
                 onChange={changeValue.bind(this, "vix")}
             />
             <View style={styles.btnHolder}>
-                <FlatButton onPress={()=>setPred((Math.random() * (75000 - 65000) + 65000).toFixed(2))}>Get Prediction</FlatButton>
+                <FlatButton onPress={()=>setPred(getPred([values.cpi, values.crude, values.msciem, values.forex, values.gold, values.iip, values.lti, values.msciw, values.vix]))}>Get Prediction</FlatButton>
                 <FlatButton>Update for Next Month</FlatButton>
             </View>
             <Text style={styles.highlight}>Prediction for next month:</Text>

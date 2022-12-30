@@ -6,7 +6,6 @@ import axios from "axios"
 
 export default function Admin(){
     function changeValue(type, value){
-        value = Number(value)
         switch(type){
             case "forex":
                 setValues(old => ({...old, forex: value}))
@@ -127,7 +126,10 @@ export default function Admin(){
                 onChange={changeValue.bind(this, "vix")}
             />
             <View style={styles.btnHolder}>
-                <FlatButton onPress={()=>setPred(getPred([values.cpi, values.crude, values.msciem, values.forex, values.gold, values.iip, values.lti, values.msciw, values.vix]))}>Get Prediction</FlatButton>
+                <FlatButton onPress={()=>{
+                    let instances = [values.cpi, values.crude, values.msciem, values.forex, values.gold, values.iip, values.lti, values.msciw, values.vix]
+                    setPred(getPred(instances.map(x => Number(x))))
+                }}>Get Prediction</FlatButton>
                 <FlatButton>Update for Next Month</FlatButton>
             </View>
             <Text style={styles.highlight}>Prediction for next month:</Text>

@@ -1,9 +1,10 @@
 import { View, StyleSheet } from 'react-native'
 import Title from '../components/ui/Title'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import MyChart from '../components/MyChart'
 import FilterButton from '../components/graphs/FilterButton'
+import { AuthContext } from '../store/auth-context'
 
 export default function HomeScreen(){
     const [fetchedData, setFetchedData] = useState(false)
@@ -11,6 +12,8 @@ export default function HomeScreen(){
     const [monthData, setMonthData] = useState({datasets: [{data:[0]}]})
     const [historicalData, setHistoricalData] = useState({datasets: [{data:[0]}]})
     const [data, setData] = useState(monthData)
+    const authCtx = useContext(AuthContext)
+
     useEffect(()=>{
         axios.get("http://192.168.1.8:3030/day")
         .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => item.value - 400), color: ()=> 'black'}], legend:["close", "prediction"]}))
@@ -40,8 +43,8 @@ export default function HomeScreen(){
 
     return(
         <View>
-            <Title size={30}>SENSEX: </Title>
-            <Title size={30}>Monthly Prediction: 68310</Title>
+            <Title size={30}>SENSEX: 68310</Title>
+            <Title size={30}>Monthly Prediction: {authCtx.pred}</Title>
             {fetchedData && <MyChart data={data} />}
             <View style={styles.filterContainer}>
                 <FilterButton onPress={()=>setData(dayData)}>1D</FilterButton>

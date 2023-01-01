@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { ScrollView, View, StyleSheet, Text } from "react-native"
 import InputVariable from "../components/InputVariable"
 import FlatButton from "../components/ui/FlatButton"
 import axios from "axios"
+import { AuthContext } from "../store/auth-context"
 
 export default function Admin(){
+    const authCtx = useContext(AuthContext)
     function changeValue(type, value){
         switch(type){
             case "forex":
@@ -49,7 +51,7 @@ export default function Admin(){
         vix: 28.71
     })
 
-    const [pred, setPred] = useState(68310)
+    const [pred, setPred] = useState(authCtx.pred)
 
     function getPred(features){
         console.log(features)
@@ -130,7 +132,7 @@ export default function Admin(){
                     let instances = [values.cpi, values.crude, values.msciem, values.forex, values.gold, values.iip, values.lti, values.msciw, values.vix]
                     setPred(getPred(instances.map(x => Number(x))))
                 }}>Get Prediction</FlatButton>
-                <FlatButton>Update for Next Month</FlatButton>
+                <FlatButton onPress={()=>authCtx.newPred(pred)}>Update for Next Month</FlatButton>
             </View>
             <Text style={styles.highlight}>Prediction for next month:</Text>
             <Text style={styles.highlight}>{pred}</Text>

@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
         padding: 16,
         flex: 1,
         borderRadius: 5,
-        marginVertical: 5
+        marginVertical: 5,
+        maxHeight: 50
     },
     pressed:{
         opacity: 0.75

@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import AccountDetails from "./Account/AccountDetails"
 import ChangePassword from "./Account/ChangePassword"
 import Subscription from "./Account/Subscription"
-import { useNavigation } from "@react-navigation/native"
 
 const items = [
     {name: "Account Details", id: 1, press: "Details"},
@@ -28,7 +27,6 @@ function MainPage(){
 }
 
 export default function Accounts(){
-    const nav = useNavigation()
     const Stack = createNativeStackNavigator()
     return(
         <Stack.Navigator>

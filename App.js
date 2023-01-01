@@ -54,7 +54,8 @@ function Authenticated(){
         name="Account"
         component={Accounts}
         options={{
-          tabBarIcon: ({focused})=> focused ? <Ionicons name='settings-sharp' size={30}/> : <Ionicons name='settings-outline' size={30}/>
+          tabBarIcon: ({focused})=> focused ? <Ionicons name='settings-sharp' size={30}/> : <Ionicons name='settings-outline' size={30}/>,
+          headerShown: false
         }}
       />
       <Tabs.Screen

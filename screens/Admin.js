@@ -54,7 +54,6 @@ export default function Admin(){
     const [pred, setPred] = useState(authCtx.pred)
 
     function getPred(features){
-        console.log(features)
         axios.post("https://tensorflowbrsensex.onrender.com/hello",{
             "instances": [features]
         })

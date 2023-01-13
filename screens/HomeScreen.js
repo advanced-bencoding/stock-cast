@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react'
 import MyChart from '../components/MyChart'
 import FilterButton from '../components/graphs/FilterButton'
 import { AuthContext } from '../store/auth-context'
+import { IP } from '../util/constants'
 
 export default function HomeScreen(){
     const [fetchedData, setFetchedData] = useState(false)
@@ -15,15 +16,15 @@ export default function HomeScreen(){
     const authCtx = useContext(AuthContext)
 
     useEffect(()=>{
-        axios.get("http://192.168.1.8:3030/day")
+        axios.get(`http://${IP}:3030/day`)
         .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => item.value - 400), color: ()=> 'black'}], legend:["close", "prediction"]}))
         .catch(err => console.log(err))
 
-        axios.get("http://192.168.1.8:3030/month")
+        axios.get(`http://${IP}:3030/month`)
         .then(response => setMonthData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}, {data: response.data.map(item => item.close - 500), color: ()=> 'black'}], legend:["close", "prediction"]}))
         .catch(err => console.log(err))
 
-        axios.get("http://192.168.1.8:3030/historical")
+        axios.get(`http://${IP}:3030/historical`)
         .then(response => setHistoricalData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}, {data: response.data.map(item => item.close - 750), color: ()=> 'black'}], legend:["close", "prediction"]}))
         .catch(err => console.log(err))
         setFetchedData(true)
@@ -34,7 +35,7 @@ export default function HomeScreen(){
         //     .catch(err => console.log(err))
         // }, 1080000)
         setInterval(()=>{
-            axios.get("http://192.168.1.8:3030/day")
+            axios.get(`http://${IP}:3030/day`)
             .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => item.value - 100), color: ()=> 'black'}], legend:["close", "prediction"]}))
             .catch(err => console.log(err))
         }, 10000)

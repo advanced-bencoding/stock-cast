@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { ScrollView, View, StyleSheet, Text } from "react-native"
+import { ScrollView, View, StyleSheet, Text, Alert } from "react-native"
 import InputVariable from "../components/InputVariable"
 import FlatButton from "../components/ui/FlatButton"
 import axios from "axios"
@@ -7,6 +7,7 @@ import { AuthContext } from "../store/auth-context"
 
 export default function Admin(){
     const authCtx = useContext(AuthContext)
+    
     function changeValue(type, value){
         switch(type){
             case "forex":
@@ -129,7 +130,17 @@ export default function Admin(){
             <View style={styles.btnHolder}>
                 <FlatButton onPress={()=>{
                     let instances = [values.cpi, values.crude, values.msciem, values.forex, values.gold, values.iip, values.lti, values.msciw, values.vix]
-                    setPred(getPred(instances.map(x => Number(x))))
+                    try{
+                        let features = instances.map(x => Number(x))
+                        for(x of features){
+                            if(isNaN(x) || x < 0.01) throw "Enter numbers greater than or equal to 0.1"
+                        }
+                        setPred(getPred(features))
+                    }
+                    catch(error){
+                        Alert.alert("Error", error)
+                    }
+                    
                 }}>Get Prediction</FlatButton>
                 <FlatButton onPress={()=>authCtx.newPred(pred)}>Update for Next Month</FlatButton>
             </View>

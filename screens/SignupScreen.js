@@ -6,23 +6,32 @@ import { useNavigation } from '@react-navigation/native'
 import { Colors } from '../constants/styles'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../store/auth-context'
-import { authenticate } from '../util/auth'
+import { authenticate, validate } from '../util/auth'
 
 export default function SignupScreen(){
     const navigation = useNavigation()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [cnfemail, setCnfemail] = useState("")
+    const [cnfpass, setCnfpass] = useState("")
 
     const authCtx = useContext(AuthContext)
 
-    async function signupHandler(email, password){
+    async function signupHandler(email, password, cnfpass){
         try{
+            if(validate({email:email})){
+                throw "Incorrect email format."
+            }
+            if(password!==cnfpass){
+                throw "Passwords don't match."
+            }
+            if(password.length < 8){
+                throw "Passwords need to be at least 8 characters long."
+            }
             const token = await authenticate("signup", email, password)
             authCtx.authenticate(token) 
         }
         catch(error){
-            Alert.alert("Signup Failed", "Try again later")
+            Alert.alert("Signup Failed", error)
         }
     }
 
@@ -34,8 +43,8 @@ export default function SignupScreen(){
             case "password":
                 setPassword(value)
                 break;
-            case "cnfmail":
-                setCnfemail(value)
+            case "cnfpass":
+                setCnfpass(value)
                 break;
         }
     }
@@ -51,20 +60,20 @@ export default function SignupScreen(){
                         changeState={stateChange.bind(this, 'email')}
                     />
                     <InputField
-                        label="Confirm Email"
-                        placeholder="someone@example.com"
-                        value={cnfemail}
-                        changeState={stateChange.bind(this, 'cnfmail')}
-                    />
-                    <InputField
                         label="Password"
                         secure
                         value={password}
                         changeState={stateChange.bind(this, 'password')}
                     />
+                    <InputField
+                        label="Confirm  Password"
+                        secure
+                        value={cnfpass}
+                        changeState={stateChange.bind(this, 'cnfpass')}
+                    />
                 </View>
                 <View style={styles.btnHolder}>
-                    <FlatButton onPress={()=>signupHandler(email, password)}>Signup</FlatButton>
+                    <FlatButton onPress={()=>signupHandler(email, password, cnfpass)}>Signup</FlatButton>
                     <FlatButton onPress={()=>{navigation.navigate("Login")}}>Login</FlatButton>
                 </View>
             </View>

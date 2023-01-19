@@ -7,12 +7,15 @@ import { useNavigation } from '@react-navigation/native'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../store/auth-context'
 import { authenticate } from '../util/auth'
+import { validate } from '../util/auth'
 
 export default function LoginScreen(){
     const navigation = useNavigation()
     const authCtx = useContext(AuthContext)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
+    
     
     function stateChange(type, value){
         switch(type){
@@ -26,11 +29,24 @@ export default function LoginScreen(){
 
     async function loginHandler(email, password){
         try{
-            const token = await authenticate("login", email, password)
-            authCtx.authenticate(token)
+            if(!validate({
+                email: email,
+                password: password
+            })){
+                const token = await authenticate("login", email, password)
+                authCtx.authenticate(token)
+            }
+            else{
+                throw "Invalid email format. Try again."
+            }
         }
         catch(error){
-            Alert.alert("Login Failed", "Check your username and password and try again.")
+            if(error === "Invalid email format. Try again."){
+                Alert.alert(error, "Format: someone@example.com")
+            }
+            else{
+                Alert.alert("Login Failed", "Check your username and password and try again.")
+            }
         }
     }
 

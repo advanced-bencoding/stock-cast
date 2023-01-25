@@ -5,13 +5,16 @@ export const AuthContext = createContext({
     authenticate: () =>{},
     logout: ()=>{},
     newPred: ()=>{},
+    setAdmin: ()=>{},
     pred: 0,
-    isAuthenticated: false
+    isAuthenticated: false,
+    isAdmin: false
 })
 
 export function AuthContextProvider({children}){
     const [authToken, setAuthToken] = useState()
     const [pred, setPred] = useState(0)
+    const [isAdmin, setIsAdmin] = useState(false)
 
     const value = {
         token: authToken,
@@ -19,11 +22,17 @@ export function AuthContextProvider({children}){
         isAuthenticated: !!authToken,
         logout: logout,
         pred: pred,
-        newPred: newPred
+        newPred: newPred,
+        isAdmin: isAdmin,
+        setAdmin: setAdmin
     }
 
     function authenticate(token){
         setAuthToken(token)
+    }
+
+    function setAdmin(admin){
+        setIsAdmin(admin)
     }
 
     function logout(){

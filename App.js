@@ -32,7 +32,7 @@ function Unauthenticated(){
   )
 }
 
-function Authenticated(){
+function Authenticated({admin}){
   return(
     <Tabs.Navigator>
       <Tabs.Screen
@@ -58,13 +58,16 @@ function Authenticated(){
           headerShown: false
         }}
       />
-      <Tabs.Screen
-        name="Admin"
-        component={Admin}
-        options={{
-          tabBarIcon: ({focused})=> focused ? <Ionicons name='hammer-sharp' size={30}/> : <Ionicons name='hammer-outline' size={30}/>
-        }}
-      />
+      {
+        admin &&
+        <Tabs.Screen
+          name="Admin"
+          component={Admin}
+          options={{
+            tabBarIcon: ({focused})=> focused ? <Ionicons name='hammer-sharp' size={30}/> : <Ionicons name='hammer-outline' size={30}/>
+          }}
+        />
+      }
     </Tabs.Navigator>
   )
 }
@@ -74,7 +77,7 @@ function Root(){
   return(
     <NavigationContainer>
       {!authCtx.isAuthenticated && <Unauthenticated />}
-      {authCtx.isAuthenticated && <Authenticated />}
+      {authCtx.isAuthenticated && <Authenticated admin={authCtx.isAdmin}/>}
     </NavigationContainer>
   )
 }

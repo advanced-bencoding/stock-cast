@@ -8,6 +8,7 @@ import { useContext, useState } from 'react'
 import { AuthContext } from '../store/auth-context'
 import { authenticate } from '../util/auth'
 import { validate } from '../util/auth'
+import { getRole } from '../util/isAdmin'
 
 export default function LoginScreen(){
     const navigation = useNavigation()
@@ -34,6 +35,8 @@ export default function LoginScreen(){
                 password: password
             })){
                 const token = await authenticate("login", email, password)
+                const admin = await getRole(email)
+                authCtx.setAdmin(admin)
                 authCtx.authenticate(token)
             }
             else{

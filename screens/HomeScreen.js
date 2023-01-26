@@ -12,18 +12,21 @@ export default function HomeScreen(){
     const [dayData, setDayData] = useState({datasets: [{data:[0]}]})
     const [monthData, setMonthData] = useState({datasets: [{data:[0]}]})
     const [historicalData, setHistoricalData] = useState({datasets: [{data:[0]}]})
+    const [pred, setPred] = useState([63875.43, 60547.32])
     const [data, setData] = useState(monthData)
     const authCtx = useContext(AuthContext)
 
     useEffect(()=>{
         console.log("used effect")
         axios.get(`http://${IP}:3030/day`)
-        .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => item.value - 400), color: ()=> 'black'}], legend:["close", "prediction"]}))
+        .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => pred[1]), color: ()=> 'black'}], legend:["close", "prediction"]}))
         .then(setData(dayData))
         .catch(err => console.log(err))
 
         axios.get(`http://${IP}:3030/month`)
-        .then(response => setMonthData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}, {data: response.data.map(item => item.close - 500), color: ()=> 'black'}], legend:["close", "prediction"]}))
+        .then(response => setMonthData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}, {data: response.data.map((item, i) => {
+            return pred[0] + i*(pred[1] - pred[0])/response.data.length
+        }), color: ()=> 'black'}], legend:["close", "prediction"]}))
         .catch(err => console.log(err))
 
         axios.get(`http://${IP}:3030/historical`)

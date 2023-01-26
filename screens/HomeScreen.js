@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native'
 import Title from '../components/ui/Title'
 import axios from 'axios'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import MyChart from '../components/MyChart'
 import FilterButton from '../components/graphs/FilterButton'
 import { AuthContext } from '../store/auth-context'
@@ -16,8 +16,10 @@ export default function HomeScreen(){
     const authCtx = useContext(AuthContext)
 
     useEffect(()=>{
+        console.log("used effect")
         axios.get(`http://${IP}:3030/day`)
         .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => item.value - 400), color: ()=> 'black'}], legend:["close", "prediction"]}))
+        .then(setData(dayData))
         .catch(err => console.log(err))
 
         axios.get(`http://${IP}:3030/month`)
@@ -25,22 +27,32 @@ export default function HomeScreen(){
         .catch(err => console.log(err))
 
         axios.get(`http://${IP}:3030/historical`)
-        .then(response => setHistoricalData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}, {data: response.data.map(item => item.close - 750), color: ()=> 'black'}], legend:["close", "prediction"]}))
+        .then(response => setHistoricalData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}], legend:["close"]}))
         .catch(err => console.log(err))
-        setFetchedData(true)
+
+        // setData(dayData)
+        // console.log(dayData.datasets[0].data, fetchedData)
 
         // setInterval(()=>{
         //     axios.get("http://192.168.1.5:8080/day")
         //     .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => item.value - 1000), color: ()=> 'black'}], legend:["close", "prediction"]}))
         //     .catch(err => console.log(err))
         // }, 1080000)
-        setInterval(()=>{
-            axios.get(`http://${IP}:3030/day`)
-            .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => item.value - 100), color: ()=> 'black'}], legend:["close", "prediction"]}))
-            .catch(err => console.log(err))
-        }, 10000)
+        // setTimeout(()=>{
+        //     setData(dayData)
+        //     console.log("i worked", dayData.datasets[0].data)
+        //     axios.get(`http://${IP}:3030/day`)
+        //     .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => item.value - 100), color: ()=> 'black'}], legend:["close", "prediction"]}))
+        //     .catch(err => console.log(err))
+        // }, 5000)
     }
     ,[])
+
+    useMemo(()=>{
+        setData(dayData)
+        setFetchedData(true)
+        console.log("i memod")
+    }, [dayData])
 
     return(
         <View>

@@ -5,7 +5,7 @@ export default function MyChart({data}){
     return(
         <LineChart
                 data={data}
-                width={Dimensions.get('window').width}
+                width={Dimensions.get('window').width - 20}
                 height={400}
                 withDots={false}
                 withInnerLines={false}

@@ -36,7 +36,7 @@ function Unauthenticated(){
 function Indices(){
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Segments" component={MarketSegments} options={{headerTitle: "Market Segments"}}/>
+      <Stack.Screen name="MSegments" component={MarketSegments} options={{headerTitle: "Market Segments"}}/>
       <Stack.Screen name="Indices" component={DummyNifty} />
     </Stack.Navigator>
   )

@@ -1,13 +1,13 @@
 import { FlatList, Text, StyleSheet, View } from "react-native"
-import Pressable from "react-native/Libraries/Components/Pressable/Pressable"
 import SegmentItem from "../components/SegmentItem"
 import { SEGMENTS } from "../segments"
+import { useNavigation } from "@react-navigation/native"
 
-function renderItem(itemData){
-    return <SegmentItem title={itemData.item.title} color={itemData.item.color} onPress={()=>console.log(itemData.item.title)}/>
-}
-
-export default function MarketSegments(){
+export default function MarketSegments({navigation}){
+    const test = useNavigation()
+    function renderItem(itemData){
+        return <SegmentItem title={itemData.item.title} color={itemData.item.color} onPress={()=>test.navigate('Indices', {index: itemData.item.id, title: itemData.item.title})}/>
+    }
     return(
         <FlatList
             data={SEGMENTS}

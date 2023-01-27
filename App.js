@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons'
 import Accounts from './screens/Account';
 import MarketSegments from './screens/MarketSegments';
 import Admin from './screens/Admin';
+import { DummyNifty } from './components/DummyNifty';
 
 const Stack = createNativeStackNavigator()
 const Tabs = createBottomTabNavigator()
@@ -32,6 +33,15 @@ function Unauthenticated(){
   )
 }
 
+function Indices(){
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Segments" component={MarketSegments} options={{headerTitle: "Market Segments"}}/>
+      <Stack.Screen name="Indices" component={DummyNifty} />
+    </Stack.Navigator>
+  )
+}
+
 function Authenticated({admin}){
   return(
     <Tabs.Navigator>
@@ -43,11 +53,11 @@ function Authenticated({admin}){
         }}
       />
       <Tabs.Screen
-        name="Marketsegs"
-        component={MarketSegments}
+        name="Segments"
+        component={Indices}
         options={{
           tabBarIcon: ({focused})=> focused ? <Ionicons name='pie-chart-sharp' size={30}/> : <Ionicons name='pie-chart-outline' size={30}/>,
-          title: 'Market Segments'
+          headerShown: false,
         }}
       />
       <Tabs.Screen

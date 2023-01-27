@@ -8,30 +8,17 @@ import { AuthContext } from '../store/auth-context'
 import { IP } from '../util/constants'
 
 export default function HomeScreen(){
+    const authCtx = useContext(AuthContext)
     const [fetchedData, setFetchedData] = useState(false)
     const [dayData, setDayData] = useState({datasets: [{data:[0]}]})
     const [monthData, setMonthData] = useState({datasets: [{data:[0]}]})
     const [historicalData, setHistoricalData] = useState({datasets: [{data:[0]}]})
-    const [pred, setPred] = useState([63875.43, 60547.32])
+    const [pred, setPred] = useState(authCtx.pred)
     const [data, setData] = useState(monthData)
-    const authCtx = useContext(AuthContext)
 
     useEffect(()=>{
-        axios.get(`http://${IP}:3030/day`)
-        .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => pred[1]), color: ()=> 'black'}], legend:["close", "prediction"]}))
-        .then(setData(dayData))
-        .catch(err => console.log(err))
-
-        axios.get(`http://${IP}:3030/month`)
-        .then(response => setMonthData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}, {data: response.data.map((item, i) => {
-            return pred[0] + i*(pred[1] - pred[0])/response.data.length
-        }), color: ()=> 'black', withDots: true}], legend:["close", "prediction"]}))
-        .catch(err => console.log(err))
-
-        axios.get(`http://${IP}:3030/historical`)
-        .then(response => setHistoricalData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}], legend:["close"]}))
-        .catch(err => console.log(err))
-
+        axios.get(`http://${IP}:3030/preds`)
+        .then(response => setPred(response.data.map( item => item.pred )))
         // setData(dayData)
         // console.log(dayData.datasets[0].data, fetchedData)
 
@@ -55,13 +42,32 @@ export default function HomeScreen(){
         setFetchedData(true)
     }, [dayData])
 
+    useMemo(()=>{
+        axios.get(`http://${IP}:3030/month`)
+        .then(response => setMonthData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}, {data: response.data.map((item, i) => {
+            return pred[0] + i*(pred[1] - pred[0])/response.data.length
+        }), color: ()=> 'black', withDots: true}], legend:["close", "prediction"]}))
+        .catch(err => console.log(err))
+
+        axios.get(`http://${IP}:3030/historical`)
+        .then(response => setHistoricalData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}], legend:["close"]}))
+        .catch(err => console.log(err))
+
+        axios.get(`http://${IP}:3030/day`)
+        .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => pred[1]), color: ()=> 'black'}], legend:["close", "prediction"]}))
+        .then(setData(dayData))
+        .catch(err => console.log(err))
+
+        authCtx.pred = pred
+    }, [pred])
+
     return(
         <View>
             <Title size={30}>SENSEX: 68310</Title>
-            <Title size={30}>Monthly Prediction: {authCtx.pred}</Title>
+            <Title size={30}>Monthly Prediction: {pred[1]}</Title>
             {fetchedData && <MyChart data={data} />}
             <View style={styles.filterContainer}>
-                <FilterButton onPress={()=>setData(dayData)}>1D</FilterButton>
+                <FilterButton onPress={()=>{setData(dayData); console.log(pred)}}>1D</FilterButton>
                 <FilterButton onPress={()=>setData(monthData)}>1M</FilterButton>
                 <FilterButton onPress={()=>setData(historicalData)}>5Y</FilterButton>
             </View>

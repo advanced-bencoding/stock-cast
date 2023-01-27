@@ -10,6 +10,7 @@ export default function InputField({placeholder, label, secure, value, changeSta
                 placeholder={placeholder}
                 value={value}
                 onChangeText={changeState}
+                autoCapitalize="none"
             />
         </View>
     )

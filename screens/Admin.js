@@ -1,13 +1,34 @@
 import { useContext, useState } from "react"
-import { ScrollView, View, StyleSheet, Text, Alert } from "react-native"
+import { ScrollView, View, StyleSheet, Text, Alert, Modal, Button } from "react-native"
 import InputVariable from "../components/InputVariable"
 import FlatButton from "../components/ui/FlatButton"
 import axios from "axios"
 import { AuthContext } from "../store/auth-context"
+import InputField from "../components/InputField"
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function Admin(){
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    const [modalVisible, setModalVisible] = useState(false)
+    const [datePickVisible, setDatePickVisible] = useState(false)
+    const [updateMonth, setUpdateMonth] = useState(new Date())
     const authCtx = useContext(AuthContext)
+    const staticdate = new Date()
     
+    function handleDateChange(event, value){
+        console.log(event)
+        if(event.type==="dismissed"){
+            setDatePickVisible(false)
+            console.log("dismissed")
+        }
+        else{
+            setUpdateMonth(value)
+            setDatePickVisible(false)
+            console.log("updated")
+            console.log(updateMonth)
+        }
+    }
+
     function changeValue(type, value){
         switch(type){
             case "forex":
@@ -64,6 +85,47 @@ export default function Admin(){
 
     return(
         <ScrollView style={styles.container}>
+            <View style={styles.modal}> 
+            <Modal
+                animationType="slide"
+                transparent={false}
+                visible={modalVisible}
+                onRequestClose={()=>setModalVisible(!modalVisible)}
+            >
+                <View style={styles.modalContentWrapper}>
+                    {   
+                        datePickVisible && 
+                        <DateTimePicker
+                            value={new Date(updateMonth)}
+                            onChange={handleDateChange}
+                            minimumDate={new Date(staticdate.getFullYear(), staticdate.getMonth(), 1)}
+                            maximumDate={new Date(staticdate.getFullYear(), staticdate.getMonth()+2, 0)}
+                        />
+                    }
+                    <Text style={styles.title}>Push Prediction Update</Text>
+                    <Text>Updating for {monthNames[updateMonth.getMonth()]} {updateMonth.getFullYear()}</Text>
+                    <Text>value: {pred}</Text>
+                    <View style={styles.sideby}>
+                        <Button
+                            onPress={()=>setDatePickVisible(true)}
+                            title="Choose Update Month"
+                        />
+                        <Button
+                            onPress={()=>console.log("pushed")}
+                            title="Push Update"
+                            color="#4BB543"
+                        />
+                    </View>
+                    <View style={styles.soloBtn}>
+                        <Button
+                            onPress={()=>setModalVisible(false)}
+                            title="Cancel"
+                            color="red"
+                        />
+                    </View>
+                </View>
+            </Modal>
+            </View>
             <InputVariable
                 label="Foreign Exchange Rate (USD to INR)"
                 value={values.forex}
@@ -135,14 +197,13 @@ export default function Admin(){
                         for(x of features){
                             if(isNaN(x) || x < 0.01) throw "Enter numbers greater than or equal to 0.1"
                         }
-                        setPred(getPred(features))
+                        getPred(features)
                     }
                     catch(error){
                         Alert.alert("Error", error)
                     }
-                    
                 }}>Get Prediction</FlatButton>
-                <FlatButton onPress={()=>authCtx.newPred(pred)}>Update for Next Month</FlatButton>
+                <FlatButton onPress={()=>setModalVisible(!modalVisible)}>Update for Next Month</FlatButton>
             </View>
             <Text style={styles.highlight}>Prediction for next month:</Text>
             <Text style={styles.highlight}>{pred}</Text>
@@ -161,5 +222,25 @@ const styles = StyleSheet.create({
     container:{
         padding: 5,
         marginHorizontal: 5
+    },
+    modal:{
+        padding: 15,
+        margin: 10
+    },
+    sideby: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        marginVertical: 10
+    },
+    soloBtn: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: "center"
+    },
+    modalContentWrapper: {
+        padding: 15
+    },
+    title:{
+
     }
 })

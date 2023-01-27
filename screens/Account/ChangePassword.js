@@ -61,12 +61,14 @@ export default function ChangePassword(){
                 label={"Old Password"}
                 value={oldField}
                 changeState={stateChange.bind(this, "old")}
+                secure
             />
             <InputField
                 placeholder={"New Password"}
                 label={"New Password"}
                 value={newField}
                 changeState={stateChange.bind(this, "new")}
+                secure
             />
             <FlatButton onPress={changePass}>Change Password</FlatButton>
         </View>

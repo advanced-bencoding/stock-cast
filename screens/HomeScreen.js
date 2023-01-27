@@ -17,7 +17,6 @@ export default function HomeScreen(){
     const authCtx = useContext(AuthContext)
 
     useEffect(()=>{
-        console.log("used effect")
         axios.get(`http://${IP}:3030/day`)
         .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => pred[1]), color: ()=> 'black'}], legend:["close", "prediction"]}))
         .then(setData(dayData))
@@ -26,7 +25,7 @@ export default function HomeScreen(){
         axios.get(`http://${IP}:3030/month`)
         .then(response => setMonthData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}, {data: response.data.map((item, i) => {
             return pred[0] + i*(pred[1] - pred[0])/response.data.length
-        }), color: ()=> 'black'}], legend:["close", "prediction"]}))
+        }), color: ()=> 'black', withDots: true}], legend:["close", "prediction"]}))
         .catch(err => console.log(err))
 
         axios.get(`http://${IP}:3030/historical`)
@@ -54,7 +53,6 @@ export default function HomeScreen(){
     useMemo(()=>{
         setData(dayData)
         setFetchedData(true)
-        console.log("i memod")
     }, [dayData])
 
     return(

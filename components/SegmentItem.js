@@ -1,14 +1,14 @@
 import { Text, View, Pressable, StyleSheet } from "react-native"
 
-export default function SegmentItem({title, color}){
+export default function SegmentItem({title, color, onPress}){
     return(
-        <View style={[styles.gridItem, {backgroundColor: color}]}>
-            <Pressable style={styles.button}>
+            <Pressable style={({pressed})=> pressed? [styles.button, {opacity: 0.5}] : styles.button} onPress={onPress}>
+                <View style={[styles.gridItem, {backgroundColor: color}]}>
                 <View style={styles.innerContainer}>
                     <Text style={styles.title}>{title}</Text>
                 </View>
+                </View>
             </Pressable>
-        </View>
     )
 }
 

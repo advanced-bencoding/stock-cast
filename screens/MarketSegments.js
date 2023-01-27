@@ -1,9 +1,10 @@
-import { FlatList, Text } from "react-native"
+import { FlatList, Text, StyleSheet, View } from "react-native"
+import Pressable from "react-native/Libraries/Components/Pressable/Pressable"
 import SegmentItem from "../components/SegmentItem"
 import { SEGMENTS } from "../segments"
 
 function renderItem(itemData){
-    return <SegmentItem title={itemData.item.title} color={itemData.item.color} />
+    return <SegmentItem title={itemData.item.title} color={itemData.item.color} onPress={()=>console.log(itemData.item.title)}/>
 }
 
 export default function MarketSegments(){
@@ -16,3 +17,9 @@ export default function MarketSegments(){
         />
     )
 }
+
+const styles = StyleSheet.create({
+    pressable:{
+        width: '50%'
+    }
+})

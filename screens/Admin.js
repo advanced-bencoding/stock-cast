@@ -14,6 +14,22 @@ export default function Admin(){
     const [updateMonth, setUpdateMonth] = useState(new Date())
     const authCtx = useContext(AuthContext)
     const staticdate = new Date()
+
+    async function pushUpdate(){
+        let year = updateMonth.getFullYear()
+        let month = (updateMonth.getMonth()+1).toString().padStart(2, "0")
+        let collection_key = year + "-" + month
+        await axios.patch(`https://firestore.googleapis.com/v1/projects/stockcast-8db50/databases/(default)/documents/predictions/${collection_key}` ,{
+            "fields":{
+                "value":{
+                    "doubleValue": pred
+                },
+                "month":{
+                    "stringValue": collection_key
+                }
+            }
+        })
+    }
     
     function handleDateChange(event, value){
         console.log(event)
@@ -73,7 +89,7 @@ export default function Admin(){
         vix: 28.71
     })
 
-    const [pred, setPred] = useState(authCtx.pred)
+    const [pred, setPred] = useState(authCtx.pred[1])
 
     function getPred(features){
         axios.post("https://tensorflowbrsensex.onrender.com/hello",{
@@ -111,7 +127,7 @@ export default function Admin(){
                             title="Choose Update Month"
                         />
                         <Button
-                            onPress={()=>console.log("pushed")}
+                            onPress={()=>pushUpdate()}
                             title="Push Update"
                             color="#4BB543"
                         />
@@ -200,12 +216,12 @@ export default function Admin(){
                         getPred(features)
                     }
                     catch(error){
-                        Alert.alert("Error", error)
+                        Alert.alert("Error", error.message)
                     }
                 }}>Get Prediction</FlatButton>
                 <FlatButton onPress={()=>setModalVisible(!modalVisible)}>Update for Next Month</FlatButton>
             </View>
-            <Text style={styles.highlight}>Prediction for next month:</Text>
+            <Text style={styles.highlight}>Prediction for next month: </Text>
             <Text style={styles.highlight}>{pred}</Text>
         </ScrollView>       
     )
@@ -222,10 +238,6 @@ const styles = StyleSheet.create({
     container:{
         padding: 5,
         marginHorizontal: 5
-    },
-    modal:{
-        padding: 15,
-        margin: 10
     },
     sideby: {
         flexDirection: "row",

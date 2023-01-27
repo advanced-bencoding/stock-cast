@@ -13,7 +13,7 @@ export const AuthContext = createContext({
 
 export function AuthContextProvider({children}){
     const [authToken, setAuthToken] = useState()
-    const [pred, setPred] = useState(0)
+    const [pred, setPred] = useState([0, 0])
     const [isAdmin, setIsAdmin] = useState(false)
 
     const value = {

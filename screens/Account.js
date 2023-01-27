@@ -1,9 +1,7 @@
-import { Text, FlatList, Pressable } from "react-native"
+import { FlatList } from "react-native"
 import AccountItem from "../components/AccountItem"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import AccountDetails from "./Account/AccountDetails"
 import ChangePassword from "./Account/ChangePassword"
-import Subscription from "./Account/Subscription"
 
 const items = [
     {name: "Change Password", id: 2, press: "ChangePassword"},

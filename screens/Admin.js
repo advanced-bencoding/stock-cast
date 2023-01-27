@@ -4,7 +4,6 @@ import InputVariable from "../components/InputVariable"
 import FlatButton from "../components/ui/FlatButton"
 import axios from "axios"
 import { AuthContext } from "../store/auth-context"
-import InputField from "../components/InputField"
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function Admin(){

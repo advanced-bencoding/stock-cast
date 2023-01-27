@@ -19,21 +19,6 @@ export default function HomeScreen(){
     useEffect(()=>{
         axios.get(`http://${IP}:3030/preds`)
         .then(response => setPred(response.data.map( item => item.pred )))
-        // setData(dayData)
-        // console.log(dayData.datasets[0].data, fetchedData)
-
-        // setInterval(()=>{
-        //     axios.get("http://192.168.1.5:8080/day")
-        //     .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => item.value - 1000), color: ()=> 'black'}], legend:["close", "prediction"]}))
-        //     .catch(err => console.log(err))
-        // }, 1080000)
-        // setTimeout(()=>{
-        //     setData(dayData)
-        //     console.log("i worked", dayData.datasets[0].data)
-        //     axios.get(`http://${IP}:3030/day`)
-        //     .then(response => setDayData({datasets: [{data: response.data.map(item => item.value), color: ()=>'#00ff00'}, {data: response.data.map(item => item.value - 100), color: ()=> 'black'}], legend:["close", "prediction"]}))
-        //     .catch(err => console.log(err))
-        // }, 5000)
     }
     ,[])
 
@@ -61,6 +46,7 @@ export default function HomeScreen(){
 
         authCtx.pred = pred
     }, [pred])
+    
     return(
         <View style={styles.container}>
             <Title size={30}>SENSEX: {dayData.datasets[0].data[dayData.datasets[0].data.length-1]}</Title>

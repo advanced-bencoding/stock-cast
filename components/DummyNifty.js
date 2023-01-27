@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import MyChart from './MyChart'
 import { indices } from '../constants/indices'
 import Title from './ui/Title'

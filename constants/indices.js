@@ -1,4 +1,5 @@
-export const nifty_metals = [
+export const indices ={
+    nifty_metals : [
 	{
 		"date": "2023-01-02",
 		"open": 6768.5,
@@ -170,9 +171,9 @@ export const nifty_metals = [
 		"adjusted_close": 6389.25,
 		"volume": 0
 	}
-]
+],
 
-export const nifty_auto = [
+nifty_auto : [
 	{
 		"date": "2023-01-02",
 		"open": 12636.5996,
@@ -345,8 +346,8 @@ export const nifty_auto = [
 		"volume": 0
 	}
 ]
-
-export const nifty_consum =[
+,
+nifty_consum:[
 	{
 		"date": "2023-01-02",
 		"open": 7569,
@@ -519,8 +520,8 @@ export const nifty_consum =[
 		"volume": 0
 	}
 ]
-
-export const nifty_energy = [
+,
+nifty_energy: [
 	{
 		"date": "2023-01-02",
 		"open": 25948.1992,
@@ -693,8 +694,8 @@ export const nifty_energy = [
 		"volume": 0
 	}
 ]
-
-export const nifty_fin = [
+,
+nifty_fin: [
 	{
 		"date": "2023-01-02",
 		"open": 18982.5,
@@ -867,8 +868,8 @@ export const nifty_fin = [
 		"volume": 182360000
 	}
 ]
-
-export const nifty_infra = [
+,
+nifty_infra: [
 	{
 		"date": "2023-01-02",
 		"open": 5266.2002,
@@ -1041,8 +1042,8 @@ export const nifty_infra = [
 		"volume": 0
 	}
 ]
-
-export const cnx_it = [
+,
+cnx_it : [
 	{
 		"date": "2023-01-02",
 		"open": 28681.5508,
@@ -1215,8 +1216,8 @@ export const cnx_it = [
 		"volume": 0
 	}
 ]
-
-export const nifty_pharma = [
+,
+nifty_pharma: [
 	{
 		"date": "2023-01-02",
 		"open": 12618.75,
@@ -1389,177 +1390,4 @@ export const nifty_pharma = [
 		"volume": 0
 	}
 ]
-
-export const cnx_service = [
-	{
-		"date": "2023-01-02",
-		"open": 24865.0508,
-		"high": 24973.5996,
-		"low": 24792.4492,
-		"close": 24924.5,
-		"adjusted_close": 24924.5,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-03",
-		"open": 24887.4004,
-		"high": 25112.4492,
-		"low": 24887.3496,
-		"close": 25068.0996,
-		"adjusted_close": 25068.0996,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-04",
-		"open": 25047.1992,
-		"high": 25084.0996,
-		"low": 24751.4004,
-		"close": 24784.5508,
-		"adjusted_close": 24784.5508,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-05",
-		"open": 24880.0996,
-		"high": 24880.0996,
-		"low": 24429.6992,
-		"close": 24587.3496,
-		"adjusted_close": 24587.3496,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-06",
-		"open": 24592.6504,
-		"high": 24600.1504,
-		"low": 24178,
-		"close": 24275.75,
-		"adjusted_close": 24275.75,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-09",
-		"open": 24396.1992,
-		"high": 24659.6992,
-		"low": 24381.8496,
-		"close": 24612.6504,
-		"adjusted_close": 24612.6504,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-10",
-		"open": 24617.6504,
-		"high": 24629.0508,
-		"low": 24224.8008,
-		"close": 24335.8496,
-		"adjusted_close": 24335.8496,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-11",
-		"open": 24337.8008,
-		"high": 24466.1992,
-		"low": 24188.8008,
-		"close": 24369,
-		"adjusted_close": 24369,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-12",
-		"open": 24401.8008,
-		"high": 24446.4492,
-		"low": 24222.5508,
-		"close": 24377.6504,
-		"adjusted_close": 24377.6504,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-13",
-		"open": 24399.9492,
-		"high": 24605.6992,
-		"low": 24265.0508,
-		"close": 24559.5996,
-		"adjusted_close": 24559.5996,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-16",
-		"open": 24675.3496,
-		"high": 24724.3008,
-		"low": 24475.3008,
-		"close": 24543.1504,
-		"adjusted_close": 24543.1504,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-17",
-		"open": 24571.8008,
-		"high": 24767.4492,
-		"low": 24517.8496,
-		"close": 24733.0996,
-		"adjusted_close": 24733.0996,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-18",
-		"open": 24763.9004,
-		"high": 24903.25,
-		"low": 24699.75,
-		"close": 24872.25,
-		"adjusted_close": 24872.25,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-19",
-		"open": 24827.1504,
-		"high": 24862.9492,
-		"low": 24716.4004,
-		"close": 24796.75,
-		"adjusted_close": 24796.75,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-20",
-		"open": 24847.1992,
-		"high": 24931.3496,
-		"low": 24783.1504,
-		"close": 24803.9004,
-		"adjusted_close": 24803.9004,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-23",
-		"open": 24960.1504,
-		"high": 25015.1992,
-		"low": 24894.6504,
-		"close": 24982.6504,
-		"adjusted_close": 24982.6504,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-24",
-		"open": 25085.9004,
-		"high": 25134.8496,
-		"low": 24944,
-		"close": 25006.9492,
-		"adjusted_close": 25006.9492,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-25",
-		"open": 24956.6504,
-		"high": 24971.6992,
-		"low": 24508,
-		"close": 24533.0508,
-		"adjusted_close": 24533.0508,
-		"volume": 0
-	},
-	{
-		"date": "2023-01-27",
-		"open": 24386.9004,
-		"high": 24401.9492,
-		"low": 23683.5,
-		"close": 23821,
-		"adjusted_close": 23821,
-		"volume": 0
-	}
-]
+}

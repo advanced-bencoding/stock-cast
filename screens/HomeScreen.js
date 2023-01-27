@@ -44,9 +44,10 @@ export default function HomeScreen(){
 
     useMemo(()=>{
         axios.get(`http://${IP}:3030/month`)
-        .then(response => setMonthData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}, {data: response.data.map((item, i) => {
+        .then(response => {setMonthData({datasets: [{data: response.data.map(item => item.close), color: ()=>'#00ff00'}, {data: response.data.map((item, i) => {
             return pred[0] + i*(pred[1] - pred[0])/response.data.length
-        }), color: ()=> 'black', withDots: true}], legend:["close", "prediction"]}))
+        }), color: ()=> 'black', withDots: true}], legend:["close", "prediction"]})
+        })
         .catch(err => console.log(err))
 
         axios.get(`http://${IP}:3030/historical`)
@@ -60,14 +61,13 @@ export default function HomeScreen(){
 
         authCtx.pred = pred
     }, [pred])
-
     return(
-        <View>
-            <Title size={30}>SENSEX: 68310</Title>
+        <View style={styles.container}>
+            <Title size={30}>SENSEX: {dayData.datasets[0].data[dayData.datasets[0].data.length-1]}</Title>
             <Title size={30}>Monthly Prediction: {pred[1]}</Title>
             {fetchedData && <MyChart data={data} />}
             <View style={styles.filterContainer}>
-                <FilterButton onPress={()=>{setData(dayData); console.log(pred)}}>1D</FilterButton>
+                <FilterButton onPress={()=>{setData(dayData)}}>1D</FilterButton>
                 <FilterButton onPress={()=>setData(monthData)}>1M</FilterButton>
                 <FilterButton onPress={()=>setData(historicalData)}>5Y</FilterButton>
             </View>
@@ -79,5 +79,8 @@ const styles = StyleSheet.create({
     filterContainer:{
         flexDirection: 'row',
         justifyContent: 'space-evenly'
+    },
+    container: {
+        padding: 10
     }
 })

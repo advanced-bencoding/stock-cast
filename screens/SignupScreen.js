@@ -7,6 +7,7 @@ import { Colors } from '../constants/styles'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../store/auth-context'
 import { authenticate, validate } from '../util/auth'
+import { registerNewUser } from '../util/isAdmin'
 
 export default function SignupScreen(){
     const navigation = useNavigation()
@@ -27,7 +28,15 @@ export default function SignupScreen(){
             if(password.length < 8){
                 throw "Passwords need to be at least 8 characters long."
             }
+            authCtx.setAdmin(false)
             const token = await authenticate("signup", email, password)
+            registerNewUser(email, {
+                "fields":{
+                    "isAdmin":{
+                        "booleanValue": false
+                    }
+                }
+            })
             authCtx.authenticate(token) 
         }
         catch(error){

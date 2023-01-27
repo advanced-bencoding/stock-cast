@@ -6,9 +6,7 @@ import ChangePassword from "./Account/ChangePassword"
 import Subscription from "./Account/Subscription"
 
 const items = [
-    {name: "Account Details", id: 1, press: "Details"},
     {name: "Change Password", id: 2, press: "ChangePassword"},
-    {name: "Subscription Details", id: 3, press: "Subscription"},
     {name: "Logout", id: 4, press:"Logout"}
 ]
 
@@ -35,16 +33,8 @@ export default function Accounts(){
                 component={MainPage}
             />
             <Stack.Screen 
-                name="Details"
-                component={AccountDetails}
-            />
-            <Stack.Screen 
                 name="ChangePassword"
                 component={ChangePassword}
-            />
-            <Stack.Screen 
-                name="Subscription"
-                component={Subscription}
             />
         </Stack.Navigator>
     )
